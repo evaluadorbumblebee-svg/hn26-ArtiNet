@@ -2,7 +2,12 @@
 
 **La plataforma que conecta el talento artesanal de Nicaragua con el mundo.**
 
-Proyecto desarrollado para **Hackathon Nicaragua 2026 (HN26)**.
+[![Hackathon](https://img.shields.io/badge/Hackathon-Nicaragua%202026-orange)](https://github.com/evaluadorbumblebee-svg/hn26-ArtiNet)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black)](https://vercel.com)
+
+**Equipo:** Bumblebee
+**Evento:** Hackathon Nicaragua 2026 (HN26) — Sprint 1
 
 ---
 
@@ -41,32 +46,39 @@ Una plataforma donde los compradores publican pedidos o propuestas, y los taller
 
 ---
 
-## 🛠️ Tecnologías
+## 🛠️ Stack Tecnológico
 
 | Capa | Tecnología |
 |---|---|
-| Backend | Next.js (API Routes) |
-| Despliegue | Vercel |
+| Backend | Next.js 16 (API Routes) |
 | Lenguaje | TypeScript |
+| Despliegue | Vercel |
 | Control de versiones | Git / GitHub |
 
 ---
 
-## 📡 Endpoints disponibles
+## 📡 API Endpoints
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/api/pedidos` | Lista todos los pedidos |
-| POST | `/api/pedidos` | Crea un nuevo pedido/propuesta |
+| `GET` | `/api/pedidos` | Lista todos los pedidos |
+| `POST` | `/api/pedidos` | Crea un nuevo pedido/propuesta |
 
-*(Más endpoints en desarrollo: talleres, productos, usuarios)*
+*Próximamente: `/api/talleres`, `/api/productos`, `/api/usuarios`*
 
 ---
 
-## 🚀 Cómo correr el proyecto localmente
+## 🚀 Instalación y ejecución local
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/evaluadorbumblebee-svg/hn26-ArtiNet.git
+cd hn26-ArtiNet
+
+# Instalar dependencias
 npm install
+
+# Correr en modo desarrollo
 npm run dev
 ```
 
@@ -77,7 +89,6 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 ## 💰 Modelo de Negocio
 
 - Comisión por venta/transacción.
-- Suscripción premium para talleres o compradores frecuentes.
 - Servicios logísticos adicionales.
 
 ---
@@ -86,23 +97,25 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 Alineado con los Objetivos de Desarrollo Sostenible (ODS):
 
-- **ODS 8** — Trabajo decente y crecimiento económico.
-- **ODS 9** — Industria, innovación e infraestructura.
-- **ODS 10** — Reducción de desigualdades.
-- **ODS 11** — Protección del patrimonio cultural.
+| ODS | Descripción |
+|---|---|
+| **8** | Trabajo decente y crecimiento económico |
+| **9** | Industria, innovación e infraestructura |
+| **10** | Reducción de desigualdades |
+| **11** | Protección del patrimonio cultural |
 
 ---
 
-## 📈 Escalabilidad
+## 📈 Plan de Escalabilidad
 
-El proyecto puede iniciar en **Masaya**, expandirse a **San Juan de Oriente, Catarina, León y Granada**, y eventualmente a otros países de Centroamérica.
-
----
-
-## 👥 Equipo
-
-Hackathon Nicaragua 2026 — HN26
+Inicio en **Masaya** → expansión a **San Juan de Oriente, Catarina, León y Granada** → proyección hacia otros países de Centroamérica.
 
 ---
 
-> "No estamos creando una aplicación para vender artesanías. Estamos construyendo la infraestructura digital que permite a los artesanos nicaragüenses conectar su talento con compradores de todo el mundo."
+## 👥 Equipo Bumblebee
+
+Proyecto desarrollado con 🧡 para **Hackathon Nicaragua 2026**.
+
+---
+
+> *"No estamos creando una aplicación para vender artesanías. Estamos construyendo la infraestructura digital que permite a los artesanos nicaragüenses conectar su talento con compradores de todas partes de Nicaragua y, en el futuro, de todo el mundo.”*
