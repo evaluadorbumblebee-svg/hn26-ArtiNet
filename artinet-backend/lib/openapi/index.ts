@@ -5,6 +5,13 @@ import { tiendasPaths } from './paths/tiendas'
 import { metodosPagoPaths } from './paths/metodoPago'
 import { categoriasProductoPaths } from './paths/categorias-produto'
 import { categoriasTiendaPaths } from './paths/categorias-tienda'
+import { imagenesPaths } from './paths/productos/imagenes'
+import { productosPaths} from './paths/productos/productos'
+import { carritoPaths } from './paths/carritos'
+import { resenasPaths } from './paths/productos/resenas'
+import { buscarProductosPaths } from './paths/buscar-productos'
+
+
 
 export const openApiSpec = {
   openapi: '3.0.0',
@@ -45,6 +52,11 @@ export const openApiSpec = {
     ...metodosPagoPaths,
     ...categoriasProductoPaths,
     ...categoriasTiendaPaths,
+    ...imagenesPaths,
+    ...productosPaths,
+    ...carritoPaths,
+    ...resenasPaths,
+    ...buscarProductosPaths,
   },
 
   components: {

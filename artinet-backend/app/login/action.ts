@@ -7,25 +7,38 @@ export async function loginProvider(provider: Provider) {
   try {
     const supabase = await createClient();
 
-    console.log(process.env.NEXT_PUBLIC_BASE_URL);
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-    const { error, data } = await supabase.auth.signInWithOAuth({
+    const redirectTo = `${baseUrl}/auth/callback`;
+
+    console.log("Redirect URL:", redirectTo);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/v1/callback`,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
+        redirectTo,
       },
     });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase OAuth error:", error.message);
 
-    return { error: null, url: data.url };
-  } catch (error) {
+      return {
+        error: error.message,
+        url: null,
+      };
+    }
+
     return {
-      error: "Error in login provider",
+      error: null,
+      url: data.url,
+    };
+  } catch (error) {
+    console.error("Login provider error:", error);
+
+    return {
+      error: "Error en el inicio de sesión",
       url: null,
     };
   }
