@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-export async function GET() {
+const CAMPOS_EDITABLES = [
+  "nombres",
+  "apellidos",
+  "telefono",
+  "foto",
+  "email_notificaciones",
+] as const;
+
+export async function PATCH(request: Request) {
   try {
     const supabase = await createClient();
 
@@ -14,49 +22,49 @@ export async function GET() {
       return NextResponse.json(
         {
           ok: false,
-          error: {
-            code: "UNAUTHORIZED",
-            message: "Debes iniciar sesión.",
-          },
+          error: { code: "UNAUTHORIZED", message: "Debes iniciar sesión." },
         },
         { status: 401 }
       );
     }
 
+    const body = await request.json();
+
+    // Filtra solo campos permitidos (nunca dejes que el cliente mande "rol" o "id")
+    const datosActualizar: Record<string, unknown> = {};
+    for (const campo of CAMPOS_EDITABLES) {
+      if (campo in body) datosActualizar[campo] = body[campo];
+    }
+
+    if (Object.keys(datosActualizar).length === 0) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: { code: "NO_FIELDS", message: "No enviaste campos válidos." },
+        },
+        { status: 400 }
+      );
+    }
+
     const { data: perfil, error } = await supabase
       .from("perfiles")
-      .select("*")
+      .update(datosActualizar)
       .eq("id", user.id)
+      .select("*")
       .single();
 
     if (error) {
       return NextResponse.json(
-        {
-          ok: false,
-          error: {
-            code: "PROFILE_NOT_FOUND",
-            message: error.message,
-          },
-        },
-        { status: 404 }
+        { ok: false, error: { code: "UPDATE_FAILED", message: error.message } },
+        { status: 400 }
       );
     }
 
-    return NextResponse.json({
-      ok: true,
-      data: perfil,
-    });
+    return NextResponse.json({ ok: true, data: perfil });
   } catch (error) {
-    console.error("GET /api/perfiles/me:", error);
-
+    console.error("PATCH /api/perfiles/me:", error);
     return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          code: "INTERNAL_ERROR",
-          message: "Error interno del servidor.",
-        },
-      },
+      { ok: false, error: { code: "INTERNAL_ERROR", message: "Error interno del servidor." } },
       { status: 500 }
     );
   }

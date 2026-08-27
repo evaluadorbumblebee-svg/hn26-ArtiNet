@@ -10,6 +10,16 @@ import { productosPaths} from './paths/productos/productos'
 import { carritoPaths } from './paths/carritos'
 import { resenasPaths } from './paths/productos/resenas'
 import { buscarProductosPaths } from './paths/buscar-productos'
+import { auditoriaPaths } from './paths/auditoria/auditoria'
+import { fa } from 'zod/locales'
+import { favoritosPaths } from './paths/favoritos'
+import { notificacionesPaths } from './paths/notificaciones'
+import { pagosPaths } from './paths/pagos'
+import { pedidosPaths } from './paths/pedidos'
+import { propuestasPaths } from './paths/propuestas'
+import { reportesPaths } from './paths/reportes/reportes'
+import { solicitudesClientePaths } from './paths/solicitudes-cliente/solicitudes-cliente'
+import { solicitudesVendedorPaths } from './paths/solicitudes-vendedor/solicitudes-vendedor'
 
 
 
@@ -57,6 +67,16 @@ export const openApiSpec = {
     ...carritoPaths,
     ...resenasPaths,
     ...buscarProductosPaths,
+    ...auditoriaPaths,
+    ...favoritosPaths,
+    ...notificacionesPaths,
+    ...pagosPaths,
+    ...pedidosPaths,
+    ...propuestasPaths,
+    ...reportesPaths,
+    ...resenasPaths,
+    ...solicitudesClientePaths,
+    ...solicitudesVendedorPaths,
   },
 
   components: {

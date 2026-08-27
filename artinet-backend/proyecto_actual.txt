@@ -1,0 +1,135 @@
+========== GIT ==========
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	proyecto_actual.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+========== COMMITS ==========
+4f4647d 19/08/2026
+3fe73fc Delete CLAUDE.md
+64aa390 Integrar cambios de GitHub
+3849d2e Avances backend
+80b3296 Mejorar frase final del README
+4cc9ec2 Actualizar README con descripción profesional del proyecto
+014c023 Initial commit from Create Next App
+ad79e84 Initial commit
+
+========== PACKAGE.JSON ==========
+{
+  "name": "artinet-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@scalar/nextjs-api-reference": "^0.9.26",
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.109.0",
+    "next": "16.2.12",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.12",
+    "typescript": "^5"
+  }
+}
+
+========== ESTRUCTURA ==========
+app/api-reference/route.ts
+app/api/auditoria/route.ts
+app/api/bancos/[id]/route.ts
+app/api/bancos/favoritos/[id]/route.ts
+app/api/bancos/favoritos/route.ts
+app/api/bancos/route.ts
+app/api/carrito/items/[id]/route.ts
+app/api/carrito/items/route.ts
+app/api/carrito/route.ts
+app/api/categorias-producto/[id]/route.ts
+app/api/categorias-producto/route.ts
+app/api/categorias-tienda/[id]/route.ts
+app/api/categorias-tienda/route.ts
+app/api/health/route.ts
+app/api/imagenes/[id]/route.ts
+app/api/metodos-pagos/[id]/route.ts
+app/api/metodos-pagos/route.ts
+app/api/monedas/[id]/route.ts
+app/api/monedas/route.ts
+app/api/notificaciones/[id]/leida/route.ts
+app/api/notificaciones/route.ts
+app/api/openapi.json/route.ts
+app/api/pagos/[id]/comprobantes/route.ts
+app/api/pagos/[id]/estado/route.ts
+app/api/pedidos/[id]/estado/route.ts
+app/api/pedidos/[id]/pagos/route.ts
+app/api/pedidos/[id]/route.ts
+app/api/pedidos/[id]/seguimiento/route.ts
+app/api/pedidos/route.ts
+app/api/perfiles/me/route.ts
+app/api/productos/[id]/buscar/route.ts
+app/api/productos/[id]/imagenes/route.ts
+app/api/productos/[id]/resenas/route.ts
+app/api/productos/[id]/route.ts
+app/api/productos/[id]/variantes/route.ts
+app/api/productos/buscar/route.ts
+app/api/productos/route.ts
+app/api/propuestas/[id]/aceptar/route.ts
+app/api/reportes/[id]/route.ts
+app/api/reportes/route.ts
+app/api/resenas/route.ts
+app/api/solicitudes-cliente/[id]/propuestas/route.ts
+app/api/solicitudes-cliente/route.ts
+app/api/solicitudes-vendedor/[id]/route.ts
+app/api/solicitudes-vendedor/route.ts
+app/api/tiendas/[id]/aprobar/route.ts
+app/api/tiendas/[id]/cuentas-bancarias/route.ts
+app/api/tiendas/[id]/route.ts
+app/api/tiendas/route.ts
+app/api/variantes/[id]/route.ts
+app/auth/callback/route.ts
+app/favicon.ico
+app/globals.css
+app/globals.css        
+app/layout.tsx
+app/login/action.ts
+app/login/page.tsx
+app/page.tsx
+lib/auth.ts
+lib/middleware.ts
+lib/openapi/index.ts
+lib/openapi/paths/bancos.ts
+lib/openapi/paths/buscar-productos.ts
+lib/openapi/paths/carritos.ts
+lib/openapi/paths/categorias-produto.ts
+lib/openapi/paths/categorias-tienda.ts
+lib/openapi/paths/metodoPago.ts
+lib/openapi/paths/monedas.ts
+lib/openapi/paths/productos/imagenes.ts
+lib/openapi/paths/productos/productos.ts
+lib/openapi/paths/productos/resenas.ts
+lib/openapi/paths/tiendas.ts
+lib/openapi/schemas.ts
+lib/pagination.ts
+lib/permissions.ts
+lib/responses.ts
+lib/supabase/admin.ts
+lib/supabase/browser.ts
+lib/supabase/middleware.ts
+lib/supabase/server.ts
+lib/validators.ts
+
+========== OPENAPI JSON ==========

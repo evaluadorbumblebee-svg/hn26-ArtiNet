@@ -15,18 +15,56 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host')
-      const isLocalEnv = process.env.NODE_ENV === 'development'
+      // Obtener el usuario autenticado
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
 
-      if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
-      } else {
-        return NextResponse.redirect(`${origin}${next}`)
+      if (user) {
+        // Consultar el teléfono del perfil
+        const { data: perfil } = await supabase
+          .from('perfiles')
+          .select('telefono')
+          .eq('id', user.id)
+          .single()
+
+        // Si no tiene teléfono, obligar a completar el perfil
+        const destino = !perfil?.telefono
+          ? '/completar-perfil'
+          : next
+
+        const forwardedHost =
+          request.headers.get('x-forwarded-host')
+
+        const isLocalEnv =
+          process.env.NODE_ENV === 'development'
+
+        if (isLocalEnv) {
+          return NextResponse.redirect(
+            `${origin}${destino}`
+          )
+        }
+
+        if (forwardedHost) {
+          return NextResponse.redirect(
+            `https://${forwardedHost}${destino}`
+          )
+        }
+
+        return NextResponse.redirect(
+          `${origin}${destino}`
+        )
       }
+
+      // No se pudo obtener el usuario
+      return NextResponse.redirect(
+        `${origin}/auth/auth-code-error`
+      )
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+  // Error al intercambiar el código o código inexistente
+  return NextResponse.redirect(
+    `${origin}/auth/auth-code-error`
+  )
 }

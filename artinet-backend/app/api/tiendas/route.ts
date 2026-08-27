@@ -41,21 +41,38 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const auth = await getAuthUser()
   if (!auth) return errors.unauthorized()
-  if (auth.perfil.rol !== 'vendedor') return errors.forbidden()
+  if (auth.perfil?.rol !== 'vendedor') return errors.forbidden()
+
+  const supabase = await createClient()
+
+  // Un propietario solo puede tener una tienda activa/pendiente a la vez
+  const { data: existente } = await supabase
+    .from('tiendas')
+    .select('id')
+    .eq('propietario_id', auth.user.id)
+    .in('estado', ['pendiente', 'activa'])
+    .maybeSingle()
+
+  if (existente) {
+    return errors.conflict('Ya tienes una tienda registrada.')
+  }
 
   const body = await request.json()
-  const { categoria_id, moneda_id, nombre, slug, descripcion, logo, banner,
+  const {
+    categoria_id, moneda_id, nombre, slug, descripcion, logo, banner,
     pais, departamento, ciudad, direccion, ruc, tipo_negocio, horario,
-    telefono, whatsapp, email, facebook, instagram, sitio_web } = body
+    telefono, whatsapp, email, facebook, instagram, sitio_web,
+  } = body
 
   if (!moneda_id) return errors.validation('moneda_id es requerido.')
   if (!nombre || nombre.length < 2) return errors.validation('nombre debe tener al menos 2 caracteres.')
-  if (!pais || !departamento || !ciudad || !direccion) return errors.validation('pais, departamento, ciudad y direccion son requeridos.')
+  if (!pais || !departamento || !ciudad || !direccion) {
+    return errors.validation('pais, departamento, ciudad y direccion son requeridos.')
+  }
   if (!tipo_negocio) return errors.validation('tipo_negocio es requerido.')
 
   const finalSlug = slug || nombre.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-  const supabase = await createClient()
   const { data, error } = await supabase
     .from('tiendas')
     .insert({
@@ -63,14 +80,30 @@ export async function POST(request: NextRequest) {
       categoria_id, moneda_id, nombre, slug: finalSlug, descripcion, logo, banner,
       pais, departamento, ciudad, direccion, ruc, tipo_negocio, horario,
       telefono, whatsapp, email, facebook, instagram, sitio_web,
+      porcentaje_comision: 10, // valor por defecto de la plataforma; el admin puede ajustarlo luego
       estado: 'pendiente',
+      activo: true,
     })
     .select()
     .single()
 
   if (error) {
-    if (error.code === '23505') return errors.conflict('Ya tienes una tienda registrada o el slug ya existe.')
+    if (error.code === '23505') return errors.conflict('El slug ya existe.')
     return errors.server(error.message)
+  }
+
+  // Notificar a los administradores que hay una tienda por aprobar
+  const { data: admins } = await supabase.from('perfiles').select('id').eq('rol', 'administrador')
+  if (admins && admins.length > 0) {
+    await supabase.from('notificaciones').insert(
+      admins.map((a: any) => ({
+        usuario_id: a.id,
+        titulo: 'Nueva tienda pendiente de aprobación',
+        mensaje: `La tienda "${data.nombre}" espera revisión.`,
+        enlace: `/admin/tiendas/${data.id}/aprobar`,
+        leida: false,
+      }))
+    )
   }
 
   return ok(data, 201)
